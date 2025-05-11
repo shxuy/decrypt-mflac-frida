@@ -7,11 +7,13 @@ from pathlib import Path
 session = frida.attach("QQMusic.exe")
 
 # 加载并执行 JavaScript 脚本
-script = session.create_script(open("hook_qq_music.js", "r", encoding="utf-8").read())
+script_dir = os.path.dirname(os.path.abspath(__file__))  
+script_file_path = os.path.join(script_dir, "hook_qq_music.js")  
+script = session.create_script(open(script_file_path, "r", encoding="utf-8").read())
 script.load()
 
 # 创建输出目录
-output_dir = "output"
+output_dir = str(Path.home()) + "\\Music\\decrypted_qq_music"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
